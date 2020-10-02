@@ -1,0 +1,40 @@
+$date
+	Sat Oct  3 00:21:39 2020
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module comparator_tb $end
+$var wire 3 ! out [2:0] $end
+$var reg 4 " A [3:0] $end
+$var reg 4 # B [3:0] $end
+$scope module c1 $end
+$var wire 4 $ A [3:0] $end
+$var wire 4 % B [3:0] $end
+$var reg 3 & out [2:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b100 &
+b0 %
+b1111 $
+b0 #
+b1111 "
+b100 !
+$end
+#10
+b100 !
+b100 &
+b100 "
+b100 $
+#20
+b1 !
+b1 &
+b100 #
+b100 %
+#40

@@ -1,4 +1,5 @@
 // behavioural
+// for signed comparison use (input signed [3:0] A, input signed [3:0] B)
 module comparator_beh(output reg [2:0] out, input [3:0] A, input [3:0] B);
 always @(A or B)
 begin
@@ -65,7 +66,7 @@ reg [3:0] A;
 reg [3:0] B;
 wire [2:0] out;
 
-comparator_gl c1(out,A,B);
+comparator_beh c1(out,A,B);
 
 initial
 begin

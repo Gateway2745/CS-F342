@@ -23,7 +23,7 @@ DECODER dec(d0,d1,d2,d3,d4,d5,d6,d7,x,y,z);
 assign s = d1 | d2 | d4 | d7, c = d3 | d5 | d6 | d7;
 endmodule
 
-module BIT_ADDER(output cout, output [7:0] out, input [7:0] A, input[7:0] B, input carry);
+module eight_bit_adder(output cout, output [7:0] out, input [7:0] A, input[7:0] B, input carry);
 wire [6:0] c;
 FADDER f1(out[0], c[0], A[0], B[0],carry);
 FADDER f2(out[1],c[1],A[1],B[1],c[0]);
@@ -41,7 +41,7 @@ reg [7:0] B = 8'b0;
 reg carry=0;
 output [7:0] out;
 output cout;
-BIT_ADDER b(cout,out,A,B,carry);
+eight_bit_adder b(cout,out,A,B,carry);
 integer i,j;
 
 initial
