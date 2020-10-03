@@ -1,0 +1,73 @@
+#! /usr/bin/vvp
+:ivl_version "10.1 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "vhdl_sys";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x557f42f67300 .scope module, "testbench" "testbench" 2 13;
+ .timescale 0 0;
+v0x557f42f87a20_0 .net "a", 0 0, v0x557f42f676c0_0;  1 drivers
+v0x557f42f87ae0_0 .net "b", 0 0, v0x557f42f87720_0;  1 drivers
+v0x557f42f87bb0_0 .net "c", 0 0, v0x557f42f877e0_0;  1 drivers
+v0x557f42f87cb0_0 .net "d", 0 0, v0x557f42f878b0_0;  1 drivers
+E_0x557f42f2cba0 .event edge, v0x557f42f878b0_0, v0x557f42f877e0_0, v0x557f42f87720_0, v0x557f42f676c0_0;
+S_0x557f42f67480 .scope module, "S" "sample" 2 15, 2 1 0, S_0x557f42f67300;
+ .timescale 0 0;
+    .port_info 0 /OUTPUT 1 "d"
+    .port_info 1 /OUTPUT 1 "a"
+    .port_info 2 /OUTPUT 1 "b"
+    .port_info 3 /OUTPUT 1 "c"
+v0x557f42f676c0_0 .var "a", 0 0;
+v0x557f42f87720_0 .var "b", 0 0;
+v0x557f42f877e0_0 .var "c", 0 0;
+v0x557f42f878b0_0 .var "d", 0 0;
+    .scope S_0x557f42f67480;
+T_0 ;
+    %fork t_1, S_0x557f42f67480;
+    %fork t_2, S_0x557f42f67480;
+    %fork t_3, S_0x557f42f67480;
+    %join;
+    %join;
+    %join;
+    %jmp t_0;
+t_1 ;
+    %delay 5, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x557f42f676c0_0, 0, 1;
+    %end;
+t_2 ;
+    %delay 10, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x557f42f87720_0, 0, 1;
+    %end;
+t_3 ;
+    %delay 15, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x557f42f877e0_0, 0, 1;
+    %end;
+    .scope S_0x557f42f67480;
+t_0 ;
+    %delay 30, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x557f42f878b0_0, 0, 1;
+    %end;
+    .thread T_0;
+    .scope S_0x557f42f67300;
+T_1 ;
+    %wait E_0x557f42f2cba0;
+    %vpi_call 2 18 "$display", $time, " a=%b, b=%b, c=%b, d=%b\012", v0x557f42f87a20_0, v0x557f42f87ae0_0, v0x557f42f87bb0_0, v0x557f42f87cb0_0 {0 0 0};
+    %jmp T_1;
+    .thread T_1, $push;
+    .scope S_0x557f42f67300;
+T_2 ;
+    %delay 100, 0;
+    %vpi_call 2 21 "$finish" {0 0 0};
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "practice.v";
