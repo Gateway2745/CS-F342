@@ -143,21 +143,21 @@ wire signed [31:0] Result;
 wire CarryOut;
 ALU m(CarryOut,Result,a,b,Binvert,Carryin,Operation);
 
-initial
-begin
-a=32'd5;
-b=32'd50;
-Operation=2'b00;
-Binvert=1'b0;
-Carryin=1'b0; //must perform AND resulting in zero
-#100 Operation=2'b01; //OR
-#5 $display(" A=%d,B=%d,Cin=%b,Binvert=%b,Operation=%b,Result=%d,Cout=%b",a,b,Carryin,Binvert,Operation,Result,CarryOut);
-#100 Operation=2'b10; //ADD
-#5 $display(" A=%d,B=%d,Cin=%b,Binvert=%b,Operation=%b,Result=%d,Cout=%b",a,b,Carryin,Binvert,Operation,Result,CarryOut);
-#100 Binvert=1'b1;//SUB
-#5 $display(" A=%d,B=%d,Cin=%b,Binvert=%b,Operation=%b,Result=%d,Cout=%b",a,b,Carryin,Binvert,Operation,Result,CarryOut);
-#200 $finish;
-end
+//initial
+// begin
+// a=32'd5;
+// b=32'd50;
+// Operation=2'b00;
+// Binvert=1'b0;
+// Carryin=1'b0; //must perform AND resulting in zero
+// #100 Operation=2'b01; //OR
+// #5 $display(" A=%d,B=%d,Cin=%b,Binvert=%b,Operation=%b,Result=%d,Cout=%b",a,b,Carryin,Binvert,Operation,Result,CarryOut);
+// #100 Operation=2'b10; //ADD
+// #5 $display(" A=%d,B=%d,Cin=%b,Binvert=%b,Operation=%b,Result=%d,Cout=%b",a,b,Carryin,Binvert,Operation,Result,CarryOut);
+// #100 Binvert=1'b1;//SUB
+// #5 $display(" A=%d,B=%d,Cin=%b,Binvert=%b,Operation=%b,Result=%d,Cout=%b",a,b,Carryin,Binvert,Operation,Result,CarryOut);
+// #200 $finish;
+// end
 endmodule
 
 // remember to add delay before display!!
@@ -184,3 +184,29 @@ assign Branch = beq;
 assign ALUOp1 = Rformat;
 assign ALUOp2 = beq;
 
+endmodule
+
+module ALUcontrol(output [2:0] out, input [1:0] op, input [5:0] funct);
+assign out[0] = (funct[0] | funct[3]) & op[1];
+assign out[1] = (~funct[2] | ~op[1]);
+assign out[2] = (funct[1] & op[1]) | op[0];
+endmodule
+
+module tbALUcontrol;
+reg [1:0] op;
+reg [5:0] funct;
+wire [2:0] out;
+
+ALUcontrol aluc(out,op,funct);
+
+initial
+begin
+    op=2'b00;
+    #5 $display("ALUop = %b, funct = %b, Operation = %b",op,funct,out);
+    op=2'b01;
+    #5 $display("ALUop = %b, funct = %b, Operation = %b",op,funct,out);
+    op=2'b10;
+    funct = 6'b000100;
+    #5 $display("ALUop = %b, funct = %b, Operation = %b",op,funct,out);
+end
+endmodule

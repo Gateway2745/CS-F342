@@ -65,9 +65,9 @@ begin
     for(i=0;i<=24;i=i+1)
     begin
         x=sequence[i];
-        $display("State = ", m.state, " Input = ", x, " Output =", rec);
         #2 clk=1;
         #2 clk=0; 
+        $display("State = ", m.state, " Input = ", x, " Output =", rec);
     end
     // #100 $finish;
 end
