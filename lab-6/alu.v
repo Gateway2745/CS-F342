@@ -50,29 +50,6 @@ output [31:0] Sum;
 assign {Cout,Sum}=In1+In2+Cin;
 endmodule
 
-
-module ALU(output cout, output [31:0] result, input [31:0] A, input [31:0] B, input binv, input cin, input [1:0] op);
-
-wire [31:0] out[0:3];
-wire [1:0] cf;
-bit32AND band(out[0],A,B);
-bit32OR bor(out[1],A,B);
-Adder_dataflow sum(cf[0],out[2],A,B,1'b0);
-Adder_dataflow diff(cf[1],out[3],A,~B,1'b1);
-
-assign result = op==2'b00 ? out[0]:
-                op==2'b01 ? out[1]:
-                op==2'b10 ? 
-                binv==1'b0 ? out[2]:
-                out[3]:
-                0;
-
-assign cout = op==2'b10 ?
-              binv==1'b0 ? cf[0]:
-              cf[1] :
-              0;
-endmodule
-
 module ControlUnit(RegDst, ALUSrc, MemtoReg, RegWrite, MemRead, MemWrite,Branch,ALUOp1,ALUOp2,Op);
 input [5:0] Op;
 output RegDst,ALUSrc,MemtoReg, RegWrite, MemRead, MemWrite,Branch,ALUOp1,ALUOp2;
@@ -97,4 +74,23 @@ module ALUcontrol(output [2:0] out, input [1:0] op, input [5:0] funct);
 assign out[0] = (funct[0] | funct[3]) & op[1];
 assign out[1] = (~funct[2] | ~op[1]);
 assign out[2] = (funct[1] & op[1]) | op[0];
+endmodule
+
+module ALU(output cout, output [31:0] result, input [31:0] A, input [31:0] B, input [2:0] op);
+wire [31:0] out[0:3];
+wire [1:0] cf;
+bit32AND band(out[0],A,B);
+bit32OR bor(out[1],A,B);
+Adder_dataflow sum(cf[0],out[2],A,B,1'b0);
+Adder_dataflow diff(cf[1],out[3],A,~B,1'b1);
+
+assign result = op==3'b000 ? out[0]:
+                op==3'b001 ? out[1]:
+                op==3'b010 ? out[2]:
+                op==3'b110 ? out[3]:
+                0;
+
+assign cout = op == 3'b010 ? cf[0]:
+              op == 3'b110 ? cf[1]:
+              0;
 endmodule

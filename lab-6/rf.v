@@ -1,6 +1,6 @@
 module d_ff(output reg q,input d,input clk,input reset);
 initial
-q=0;
+q=0;                    
 always @(posedge clk) // do not add 'or reset' as when reset changes from 0 to 1, data will be written
 begin
     if(!reset)
@@ -51,5 +51,6 @@ generate
 endgenerate
 
 mux32_1 read1(ReadData1,RF,ReadReg1);
-mux4_1 read2(ReadData2,RF,ReadReg2);
+mux32_1 read2(ReadData2,RF,ReadReg2);
+
 endmodule

@@ -101,7 +101,7 @@ end
 
 initial begin
     $monitor(, $time, " clk=%d ReadData1=%b, ReadData2=%b, WriteData=%b",clk, ReadData1, ReadData2, WriteData);
-    clk=1; reset=0; ReadReg1=2'b00; ReadReg2=2'b00; WriteReg=2'b00; RegWrite=1'b1;
+    clk=1; reset=0; ReadReg1=2'b00; ReadReg2=2'b01; WriteReg=2'b00; RegWrite=1'b1;
     WriteData = 32'HAFAFAFAF;
     #10 reset = 1'b1; RegWrite = 1'b1;  WriteData = 32'hF0F0F0F0; WriteReg = 2'b00;
     #10 RegWrite = 1'b1;  WriteData = 32'hF8F8F8F8; WriteReg = 2'b01;
