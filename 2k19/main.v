@@ -1,6 +1,6 @@
 `timescale 1us/1us
 
-module MUX_2X1(output q, input [1:0] in, input sel);
+module MUX_2X1(output q, input [1:0] in, input sel); // mux in dataflow
 assign q = sel == 0 ? in[0]:in[1];
 endmodule
 
@@ -29,7 +29,6 @@ endmodule
 module COUNTER_3BIT(output reg [2:0] q, input clear, input clk);
 initial
     q=0;
-
 
 always @(clear)
 begin
@@ -67,6 +66,7 @@ begin
         endcase
     end 
 end
+
 endmodule
 
 module MEMORY(output reg [7:0] q, input [2:0] in);

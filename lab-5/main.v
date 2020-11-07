@@ -1,4 +1,4 @@
-module d_ff(output reg q,input d,input clk,input reset);
+module (output reg q,input d,input clk,input reset);
 initial
 q=0;
 
