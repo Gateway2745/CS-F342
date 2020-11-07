@@ -29,20 +29,6 @@ begin
 end
 endmodule
 
-
-// d flip flop with synchronous set and reset
-module d_ff(output reg q, input d, input clk, input set, input reset);
-always @(posedge clk)
-    case({set,reset})
-    2'b00 : q <= d;
-    2'b01 : q <= 1'b0;
-    2'b10 : q <= 1'b1;
-    2'b11 : q <= 1'bz;
-    endcase
-endmodule
-
-
-
 // behavioural TFF with asynchronous clear
 module TFF(output reg q, input t, input clk, input clear); 
 always @(clear)
@@ -55,6 +41,41 @@ begin
         if(t) q <= ~q;
         else q <= q;
     end
+end
+endmodule
+
+
+// d flip flop with synchronous set and reset
+module d_ff(output reg q, input d, input clk, input set, input reset);
+always @(posedge clk)
+    case({set,reset})
+    2'b00 : q <= d;
+    2'b01 : q <= 1'b0;
+    2'b10 : q <= 1'b1;
+    2'b11 : q <= 1'bz;
+    endcase
+endmodule
+
+//d flip flop with synchronous clear
+module dff_sync_clear(d, clearb, clock, q);
+input d, clearb, clock;
+output q;
+reg q;
+always @(posedge clock)
+begin
+    if (!clearb) q <= 1'b0;
+    else q <= d;
+end
+endmodule
+
+module dff_async_clear(d, clearb, clock, q);
+input d, clearb, clock;
+output q;
+reg q;
+always @ (negedge clearb or posedge clock)
+begin
+    if (!clearb) q <= 1’b0;
+    else q <= d;
 end
 endmodule
 

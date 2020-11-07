@@ -81,6 +81,6 @@ initial
 begin
 $dumpfile("test.vcd");
 $dumpvars(0,comparator_tb);
-$monitor("\nA : %b, B : %b, ANS:%b", A, B, out);
+$monitor("A : %b, B : %b, result : %b", A, B, out);
 end
 endmodule
