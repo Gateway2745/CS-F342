@@ -1,1 +1,1 @@
-Computer Architecture Labs
+CS F342 - Computer Architecture Labs
